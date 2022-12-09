@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
+    <meta http-equiv="Content-Type" content="text/html     charset=UTF-8" />
+    <!-- レスポンシブにするために必要 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EH Controller</title>
+    <link rel="icon" href="https://yushisato.com/images/logos/youseegreen.ico">
+    <link rel="shortcut icon" href="https://yushisato.com/images/logos/youseegreen.ico">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <!-- ヘッダー左　ブランドロゴ -->
+            <div class="header-left">
+                <a href="/">EH Controller</a>
+            </div>        
+            <!-- メニュー等 ヘッダー右 -->
+            <div class="header-right">
+            </div>
+        </div>
+    </header>
+
+
+    <!-- メインボディ -->
+    <div class="container">
+        <!-- 余白 -->
+        <div class="v-space" style="margin-top: 11vh"></div>
+
+        <div id="parent">
+            <div id="child1">
+                <div class="how-to-use" style="display: block; margin-bottom: 2vh;">
+                タッチパネルベースでExtendedHandを操作するWebアプリです。<br>
+                ※本Webアプリとは別にExtendedHandアプリケーションが必要です（こちら）<br>
+                </div>
+    
+                <div class="how-to-use" style="display: block; margin-bottom: 2vh;">
+                0. Main PCでExtendedHandアプリを起動します。<br>
+                2. Main PCのIPアドレスを入力してMain PCと接続。<br>
+                3. タッチパネル上で自分の手を動かすとExtendedHandアプリのバーチャルハンドが動きます。<br>
+                </div>
+
+                <div class="touch-container">
+                    <div id="touch-area">
+                    </div>
+                    <div id="touch-msg-container">
+                        上の領域上でタッチしてください。
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="child2">
+                <div class="pc-connection-container">
+                    <div class="ip-address-container">
+                        <div>IP アドレス</div>
+                        <input type="text" size="80" id="target-ip-text" value="100.80.145.117" />
+                    </div>
+                    <div class="port-container-container">
+                        <div>ポート番号</div>
+                        <input type="text" size="80" id="target-port-text" value="50000" />
+                    </div>
+                    <input type="button" id="ws-start-btn">
+                    <label for="ws-start-btn">MainPC接続</label>
+                    <input type="button" id="ws-stop-btn">
+                    <label for="ws-stop-btn">MainPC切断</label>
+                    <div id="pc-connection-msg-container">
+                        MainPCと接続してください。
+                    </div>
+                    <div class="ip-address-container">
+                        <div>ハンドの名前</div>
+                        <input type="text" size="80" id="hand-name" value="" />
+                    </div>
+                    <input type="button" id="add-new-hand-btn">
+                    <label for="add-new-hand-btn">新しくハンドを追加</label>
+                </div>
+
+
+
+                <div class="eh-setting-container">
+                    <div class="setting-container">
+                        <div class="setting-item-name">腕の始点</div>
+                        <input type="radio" name="rootpos-fix-flex" value="rootpos-fix-flex" id="setting-rootpos-fix-btn" checked>
+                        <label for="setting-rootpos-fix-btn">固定</label>
+                        <input type="radio" name="rootpos-fix-flex" value="rootpos-fix-flex" id="setting-rootpos-flex-btn">
+                        <label for="setting-rootpos-flex-btn">追従</label>
+                        <input type="radio" name="rootpos-fix-flex" value="rootpos-fix-flex" id="setting-rootpos-halffix-btn">
+                        <label for="setting-rootpos-halffix-btn">半追従</label>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">腕の始点のx座標</div>
+                        <div class="setting-item-left">左</div>
+                        <input type="range" id="setting-rootpos-slider" min="-10" max="10" step="1" value="0">
+                        <div class="setting-item-right">右</div>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">腕のサイズ</div>
+                        <div class="setting-item-left">小</div>
+                        <input type="range" id="setting-handseize-slider" min="-10" max="10" step="1" value="0">
+                        <div class="setting-item-right">大</div>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">透明度</div>
+                        <div class="setting-item-left">0%</div>
+                        <input type="range" id="setting-transparent-slider" min="-10" max="10" step="1" value="0">
+                        <div class="setting-item-right">100%</div>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">制御方式</div>
+                        <input type="radio" name="operation-rawdata-gesture" value="fix-position" id="setting-operation-rawdata-btn" checked>
+                        <label for="setting-operation-rawdata-btn">生データ</label>
+                        <input type="radio" name="operation-rawdata-gesture" value="flex-position" id="setting-operation-gesture-btn">
+                        <label for="setting-operation-gesture-btn">ジェスチャ</label>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">Main PCハック</div>
+                        <input type="radio" name="mainpchack-on-off" value="fix-position" id="setting-mainpchack-on-btn" checked>
+                        <label for="setting-mainpchack-on-btn">ON</label>
+                        <input type="radio" name="mainpchack-on-off" id="setting-mainpchack-off-btn">
+                        <label for="setting-mainpchack-off-btn">OFF</label>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">表示する手</div>
+                        <input type="radio" name="dominant-right-left" id="setting-dominant-right-btn" checked>
+                        <label for="setting-dominant-right-btn">右手</label>
+                        <input type="radio" name="dominant-right-left" id="setting-dominant-left-btn">
+                        <label for="setting-dominant-left-btn">左手</label>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">表示する手の長さ</div>
+                        <input type="radio" name="armtype-whole-hand" id="setting-armtype-whole-btn" checked>
+                        <label for="setting-armtype-whole-btn">手全体</label>
+                        <input type="radio" name="armtype-whole-hand" id="setting-armtype-hand-btn">
+                        <label for="setting-armtype-hand-btn">手のみ</label>
+                    </div>
+                    <div class="setting-container">
+                        <div class="setting-item-name">手のレンダリング</div>
+                        <input type="radio" name="handtype-real-laser" id="setting-handtype-real-btn" checked>
+                        <label for="setting-handtype-real-btn">リアル</label>
+                        <input type="radio" name="handtype-real-laser" id="setting-handtype-laser-btn">
+                        <label for="setting-handtype-laser-btn">レーザ</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="v-space" style="margin-top: 5vh"></div>
+
+    <footer>
+        &copy; 2022 <a href="https://yushisato.com">youseegreen</a>　使用ライブラリはhtmlのコメントに記載しています。本ページの利用により何らかの損失を被っても責任は負いかねますのでご了承ください。
+    </footer>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+    WS_START_ID = "ws-start-btn";
+    WS_STOP_ID = "ws-stop-btn";
+    TARGET_IP_ID = "target-ip-text";
+    TARGET_PORT_ID = "target-port-text";
+    DEBUG_LOG_ID = "log-text";
+
+    const touchArea = document.getElementById("touch-area")
+    const displayTouches = document.getElementById("touch-msg-container")
+
+
+    // 操作するハンドの名前（デフォルト：""、全ての手を操作：all_vhs）
+    var hand_name = "";
+
+    // WebSocket通信関連
+    var wSck = null;    // WebScoketオブジェクト
+    // MainPC(ip, port)と接続する関数
+    make_ws_connection = function(){
+        console.log("make_ws_connection");
+        if (wSck != null)
+            make_ws_disconnection();
+        // FIXME if wSck != null, then close wSck
+        var target_ip = document.getElementById(TARGET_IP_ID).value;
+        var target_port = document.getElementById(TARGET_PORT_ID).value;
+        console.log("ws://" + target_ip + ":" + target_port);
+        wSck = new WebSocket("ws://" + target_ip + ":" + target_port);
+
+        //ソケット接続時のアクション
+        // 接続通知
+        wSck.onopen = function(event) {
+            console.log(event.data);
+            // FIXME 
+            document.getElementById('pc-connection-msg-container').innerHTML = "接続しました。" + "<br/>";
+        };
+        // エラー発生
+        wSck.onerror = function(error){
+            console.log(error.data);
+            document.getElementById('pc-connection-msg-container').innerHTML = "エラーが発生しました。再接続してください。";
+        }
+        // メッセージ受信
+        wSck.onmessage = function(event){
+            document.getElementById('pc-connection-msg-container').innerHTML += event.data + "<br/>";
+            console.log(event.data);
+        }
+        // 切断
+        wSck.onclose = function(){
+            make_ws_disconnection();
+            document.getElementById('pc-connection-msg-container').innerHTML = "切断されました。再接続してください。";
+            console.log("Close ws");
+        }
+    };
+
+    // #ISSUE : is this need?
+    make_ws_disconnection = function(){
+        // FIXME
+        if (wSck != null){
+            wSck.close();
+            wSck = null;
+        }
+    };
+
+    // (target_ip, port)にメッセージを送る関数
+    ws_send_msg = function(msg) {
+        // FIXME
+        // console.log("send : " + msg);
+        if (wSck != null)
+            wSck.send(msg);//ソケットに送信
+    };
+
+    touchinfo2msg = function(touchinfo, type){
+        console.log(touchinfo);
+        var msg = hand_name + ',m,' + touchinfo.touches.length + ',';
+        for ( var i = 0; i < touchinfo.touches.length; i++ ){
+            var touch = touchinfo.touches.item(i);
+            msg += `${parseInt(touch.clientX)},${parseInt(touch.clientY)},`
+        }        
+        console.log(msg);
+        return msg + 'end';
+    }
+
+    // window.onloadはページロードされた時に呼ばれるコールバック関数
+    window.onload = function load() {
+        document.getElementById(WS_START_ID).addEventListener('click', () => make_ws_connection());
+        document.getElementById(WS_STOP_ID).addEventListener('click', () => make_ws_disconnection());
+
+        document.getElementById('add-new-hand-btn').addEventListener('click', function (event){ ws_send_msg("system,a," + hand_name + ",end"); });
+        document.getElementById('hand-name').addEventListener('change', function (event){ hand_name = document.getElementById('hand-name').value; });
+
+        var target_ip = document.getElementById(TARGET_IP_ID).value;
+
+        // 要素の取得
+        touchArea.addEventListener("touchstart", function(){ 
+            ws_send_msg(touchinfo2msg(event, "start")) 
+        });
+        touchArea.addEventListener("touchend", function(){ 
+            ws_send_msg(touchinfo2msg(event, "end"))
+        });
+        touchArea.addEventListener("touchmove", function(){ 
+            event.preventDefault(); 
+            ws_send_msg(touchinfo2msg(event, "move")) 
+        });
+        touchArea.addEventListener("touchcancel", function(){ 
+            ws_send_msg(touchinfo2msg(event, "cancel")) 
+        });
+
+        // EH Setting
+        document.getElementById('setting-rootpos-fix-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,a,a,0,end"); });
+        document.getElementById('setting-rootpos-flex-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,a,b,0,end"); });
+        document.getElementById('setting-rootpos-halffix-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,a,c,0,end"); });
+        document.getElementById('setting-rootpos-slider').addEventListener('change', function (event){ ws_send_msg(hand_name + ",s,a,d," + document.getElementById('setting-rootpos-slider').value + ",end");});
+        document.getElementById('setting-handseize-slider').addEventListener('change', function (event){ ws_send_msg(hand_name + ",s,b,a," + document.getElementById('setting-handseize-slider').value + ",end");});
+        document.getElementById('setting-transparent-slider').addEventListener('change', function (event){ ws_send_msg(hand_name + ",s,c,a," + document.getElementById('setting-transparent-slider').value + ",end");});
+        document.getElementById('setting-operation-rawdata-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,d,a,0,end"); });
+        document.getElementById('setting-operation-gesture-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,d,b,0,end"); });
+        document.getElementById('setting-mainpchack-on-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,e,a,0,end"); });
+        document.getElementById('setting-mainpchack-off-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,e,b,0,end"); });
+        document.getElementById('setting-dominant-right-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,f,a,0,end"); });
+        document.getElementById('setting-dominant-left-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,f,b,0,end"); });
+        document.getElementById('setting-armtype-whole-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,g,a,0,end"); });
+        document.getElementById('setting-armtype-hand-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,g,b,0,end"); });       
+        document.getElementById('setting-handtype-real-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,h,a,0,end"); });
+        document.getElementById('setting-handtype-laser-btn').addEventListener('click', function (event){ ws_send_msg(hand_name + ",s,h,b,0,end"); });       
+    } 
+</script>
+
+<style>
+
+/* 全体のスタイル */
+body{
+    margin: 0; /*htmlのデフォルト設定を消す*/
+}
+input[type=radio] {
+    display: none; 
+}    
+input[type=button] {
+    display: none; 
+}    
+
+
+
+/* ヘッダーのバナーと基本設定 */
+header{
+    height: 5vh;
+    width: 100%;
+    background-color: rgba(0, 118, 65, 1.0);
+    position :fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+}
+
+.header-container{
+    max-width: 1216px;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.header-left{
+    font-size: 24px;
+    color: white;
+    float: left;
+    vertical-align: middle;
+}
+.header-right{
+    font-size: 18px;
+    color: white;
+    float: right;
+    vertical-align: middle;
+}
+header a {
+    text-decoration: none;
+    color: white;
+}
+footer{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    /* position: absolute;
+    bottom: 0; */
+    padding: 1vh 0 1vh 0;
+    background: hsl(220, 10%, 90%);
+    box-shadow: -50vw 0 hsl(220, 10%, 90%), 50vw 0 hsl(220, 10%, 90%);
+    text-align: center;
+    font-size: 12px;
+}
+footer a{
+    color: #333333;
+    background-color: transparent;
+    text-decoration:none;
+    border-bottom:0rem;
+}
+footer a:hover{
+    color: #055622;
+    text-decoration: underline;
+    border-bottom:1rem;
+}
+
+
+.container{
+    width: 95%;
+    max-width:1920px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#child1 {
+    background-color: lightblue;
+    width: 95%;
+    max-width:600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#child2 {
+    background-color: lightgreen;
+    width: 95%;
+    max-width:600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+@media (min-width: 1200px) {
+    #parent {
+    display: flex;
+    }
+    #child1 {
+    flex-grow: 1;
+    }
+    #child2 {
+    flex-grow: 1;
+    }
+}
+
+.touch-container {
+      padding: 0px;
+      width: 100%;
+      max-width: 600px; /* padding * 2 + width が全体の幅 */
+      /* background-color: rgba(255, 255, 255, 0.385);             文字色 */
+      background-color: rgba(255, 0, 0, 0.1);    
+}
+
+/* .camera-on-off-container  */
+label {
+    color:#fff;
+    height: 22px;
+    width: 25%;
+    margin: auto;
+    padding: 0em 0.5em;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    cursor: pointer;
+}
+/* .camera-on-off-container  */
+label:hover {
+    opacity: 0.75;
+}
+/* .camera-on-off-container  */
+input[type="radio"]:checked + label {
+    background-color: rgba(0, 118, 65, 0.8);
+}
+    
+
+#touch-area {
+    max-width: 600px;  /* padding * 2 + width が全体の幅 */
+    width: 100%;
+    /* background-color: rgba(0, 118, 65, 0.1); */
+    background-color: rgba(0, 0, 255, 0.1);
+    display: inline-block;
+    overflow: hidden;
+    height: 300px;
+    max-height: 58vh;
+}
+    
+.loading-fade-area {
+    /* display: none; */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 0, 0, 0.02);
+    /* background-color: rgba(152, 235, 198, 0.8); */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+/* .loading-animation-area{
+    width: 1%;
+    height: 1%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+} */
+
+
+#touch-msg-container {
+    text-align: center;
+    /* display: flex; */
+    background-color: rgba(255, 200, 255, 1);
+    justify-content: center;
+    /* flex-basis: 25%; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.setting-container {
+    width: 90%;
+    /* height: 30px; */
+    /* line-height:30px; */
+    display: flex;
+    text-align: center;
+    background-color: rgba(255, 200, 255, 1);
+    justify-content: center;
+    flex-basis: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-size: 14px;
+    /* color: white; */
+    position: relative;
+}
+
+.setting-container label {
+    color:#fff;
+    height: 22px;
+    margin: auto;
+    padding: 0em 0.5em;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    cursor: pointer;
+    /* position: absolute; */
+    /* left: 0.5%; */
+}
+
+
+.setting-container label:hover {
+    opacity: 0.75;
+}
+.setting-container input[type="radio"]:checked + label {
+    background-color: rgba(0, 118, 65, 0.8);
+}
+
+.setting-container .setting-item-name {
+    text-align: center;
+    background-color: rgba(200, 255, 255, 1);
+    justify-content: center;
+    flex-basis: 25%;
+    margin-right: auto;
+}
+
+.setting-container .setting-item-left {
+    text-align: center;
+    background-color: rgba(255, 200, 200, 1);
+    justify-content: center;
+    flex-basis: 10%;
+    margin-left: auto;
+}
+.setting-container .setting-item-right {
+    text-align: center;
+    background-color: rgba(255, 200, 200, 1);
+    justify-content: center;
+    flex-basis: 10%;
+    margin-right: auto;
+}
+
+    
+    
+    
+/* スクロールバー */
+::-webkit-scrollbar {
+width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.5);
+    background: rgba(0, 118, 65, 0.01);
+}
+::-webkit-scrollbar-thumb {
+background: rgba(0, 118, 65, 0.5);
+border-radius: 2px;
+}
+    
+/* スライドのデザイン */
+input[type="range"]{
+    margin:auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    height:22px;
+    width:280px;
+    cursor: pointer;
+    border-radius: 0;
+}
+::-webkit-slider-runnable-track{
+    background: #ddd;
+}
+::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 20px;
+    height: 22px;
+    background: white;
+    box-shadow: -100vw 0 0 100vw rgba(0, 118, 65, 0.8);
+    border: 2px solid #999;
+}
+    
+    
+    
+    
+    </style>

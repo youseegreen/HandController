@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
+    <meta http-equiv="Content-Type" content="text/html     charset=UTF-8" />
+    <!-- レスポンシブにするために必要 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EH Controller</title>
+    <link rel="icon" href="https://yushisato.com/images/logos/youseegreen.ico">
+    <link rel="shortcut icon" href="https://yushisato.com/images/logos/youseegreen.ico">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <!-- ヘッダー左　ブランドロゴ -->
+            <div class="header-left">
+                <a href="/">EH Controller</a>
+            </div>        
+            <!-- メニュー等 ヘッダー右 -->
+            <div class="header-right">
+            </div>
+        </div>
+    </header>
+
+    <!-- メインボディ -->
+    <div class="container">
+
+        <div class="v-space" style="margin-top: 11vh"></div>
+
+        <h3>Mediapipe版</h3>
+        Mediapipe版をダウンロード（<a href="mediapipe.html" download="mediapipe.html">https://yushisato/HandController/mediapipe.html</a> をダウンロードします）<br>
+        ダウンロードしたmediapipe.htmlをブラウザで開いてください。<br>
+        使い終わった後はダウンロードしたmediapipe.htmlを削除してください。
+
+        <h3>Touchpanel版</h3>
+        Touchpanel版をダウンロード（<a href="touchpanel.html" download="touchpanel.html">https://yushisato/HandController/touchpanel.html</a> をダウンロードします）<br>
+        ダウンロードしたtouchpanel.htmlをブラウザで開いてください。<br>
+        使い終わった後はダウンロードしたtouchpanel.htmlを削除してください。
+
+
+    <div class="v-space" style="margin-top: 11vh"></div>
+
+    <footer>
+        &copy; 2022 <a href="https://yushisato.com">youseegreen</a>　使用ライブラリはhtmlのコメントに記載しています。本ページの利用により何らかの損失を被っても責任は負いかねますのでご了承ください。
+    </footer>
+
+</body>
+</html>
+
+
+<style>
+
+/* 全体のスタイル */
+body{
+    margin: 0; /*htmlのデフォルト設定を消す*/
+}
+input[type=radio] {
+    display: none; 
+}    
+input[type=button] {
+    display: none; 
+}    
+
+
+
+/* ヘッダーのバナーと基本設定 */
+header{
+    height: 5vh;
+    width: 100%;
+    background-color: rgba(0, 118, 65, 1.0);
+    position :fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+}
+
+.header-container{
+    max-width: 1216px;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.header-left{
+    font-size: 24px;
+    color: white;
+    float: left;
+    vertical-align: middle;
+}
+.header-right{
+    font-size: 18px;
+    color: white;
+    float: right;
+    vertical-align: middle;
+}
+header a {
+    text-decoration: none;
+    color: white;
+}
+footer{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    /* position: absolute;
+    bottom: 0; */
+    padding: 1vh 0 1vh 0;
+    background: hsl(220, 10%, 90%);
+    box-shadow: -50vw 0 hsl(220, 10%, 90%), 50vw 0 hsl(220, 10%, 90%);
+    text-align: center;
+    font-size: 12px;
+}
+footer a{
+    color: #333333;
+    background-color: transparent;
+    text-decoration:none;
+    border-bottom:0rem;
+}
+footer a:hover{
+    color: #055622;
+    text-decoration: underline;
+    border-bottom:1rem;
+}
+
+
+.container{
+    width: 95%;
+    max-width:1920px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* .camera-on-off-container  */
+label {
+    color:#fff;
+    height: 22px;
+    width: 25%;
+    margin: auto;
+    padding: 0em 0.5em;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    cursor: pointer;
+}
+/* .camera-on-off-container  */
+label:hover {
+    opacity: 0.75;
+}
+/* .camera-on-off-container  */
+input[type="radio"]:checked + label {
+    background-color: rgba(0, 118, 65, 0.8);
+}
+    
+    
+/* スクロールバー */
+::-webkit-scrollbar {
+width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.5);
+    background: rgba(0, 118, 65, 0.01);
+}
+::-webkit-scrollbar-thumb {
+background: rgba(0, 118, 65, 0.5);
+border-radius: 2px;
+}
+    
+/* スライドのデザイン */
+input[type="range"]{
+    margin:auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    height:22px;
+    width:280px;
+    cursor: pointer;
+    border-radius: 0;
+}
+::-webkit-slider-runnable-track{
+    background: #ddd;
+}
+::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 20px;
+    height: 22px;
+    background: white;
+    box-shadow: -100vw 0 0 100vw rgba(0, 118, 65, 0.8);
+    border: 2px solid #999;
+}
+        
+</style>
